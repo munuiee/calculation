@@ -355,7 +355,7 @@ class DivideOperation {
 
 <br>
 
-두 번째로 생각한 방법은, 저 아래 연산 클래스들을 하나의 클래스로 묶어 결과를 리턴하는 것이었다. 구글링을 해봤는데 마땅하게 배울만한 코드가 없어서 지피티한테 아주 살짝 물어봤다. (코드는 절대 안 받고 말로만 어떻게 해야하는지...) 보니까 함수명을 같게 해서 override를 해주면 된다고 했다.
+두 번째로 생각한 방법은, 저 아래 연산 클래스들을 하나의 클래스로 묶어 결과를 리턴하는 것이었다. 구글링을 해봤는데 마땅하게 배울만한 코드가 없어서 지피티한테 아주 살짝 물어봤다. (코드는 절대 안 받고 말로만 어떻게 해야하는지...) 보니까 함수명을 같게 해서 override를 해주면 된다고 했다. 즉 Operation은 부모 클래스, 나머지 연산 클래스들을 자식으로 삼는 것이다.
 
 ```swift
 class Operation {
@@ -402,4 +402,28 @@ for a in calculators {
 
 암튼 배열을 주고 반복문으로 결과를 출력시켰는데 오잉 코드가 돌아가긴 돌아간다. 근데!! 이게 맞는지 모르겠는게, 일단 Calculator 클래스와 관계를 맺지 않았다. 내가 봐도... 차라리 Calculator 클래스에 함수를 모조리 넣어서 해보는 건 어떨까 싶다. 내일 도전해보겠다!
 
+<br>
+
+## 0822 금요일
+
+```swift
+class Calculator {
+    // Todo : 내부 구현하기
+    
+    var operation: Operation
+    var num1: Double
+    var num2: Double
+    
+    init(num1: Double, num2: Double, operation: Operation) {
+        self.num1 = num1
+        self.num2 = num2
+        self.operation = operation
+    }
+  
+}
+```
+
+우선 Operation 클래스와 Calculator 클래스를 연결해주었다. <br>
+중간에 `Return from initializer without initializing all stored properties` 라는 오류가 떴는데, <br>
+`init`에 `self.operation = opration`으로 초기화를 안 해줘서 생긴 에러였다.
 
