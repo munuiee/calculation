@@ -789,18 +789,35 @@ print(calculator.division(6, 0))
 
 ```
 
+<br>
+
+#### 빼먹은 나머지 연산 추가
+```
+class RemainderOperation {
+    func remainder(_ num1: Int, _ num2: Int) -> Int {
+        return num1 % num2
+    }
+}
+```
+<br>
+
+
 # 최종 수정
 ```swift
+
 
 class Calculator {
     
     var num1: Double = 0
     var num2: Double = 0
     
+    // Operation 클래스들과 Calculator 클래스 연결
+    
     let addResult = AddOperation()
     let minusResult = SubstractOperation()
     let multiplyResult = MultiplyOperation()
     let divisionResult = DivideOperation()
+    let remainderResult = RemainderOperation()
     
     
     
@@ -816,7 +833,10 @@ class Calculator {
         return multiplyResult.multiply(num1, num2)
     }
     
-    func division(_ num1: Int, _ num2: Int) -> Int {
+    
+    // 분모가 0인 경우 대비
+    
+    func division(_ num1: Double, _ num2: Double) -> Double {
         if num2 == 0 {
             print("0으로 나눌 수 없습니다.")
             return 0
@@ -824,11 +844,21 @@ class Calculator {
             return divisionResult.division(num1, num2)
         }
     }
+    
+    func remainder(_ num1: Int, _ num2: Int) -> Int {
+        if num2 == 0 {
+            print("0으로 나눌 수 없습니다.")
+            return 0
+        } else {
+            return remainderResult.remainder(num1, num2)
+        }
+    }
 
   
 }
 
 
+// Operation 클래스들
 
 class AddOperation {
      func add(_ num1: Int, _ num2: Int) -> Int {
@@ -850,19 +880,30 @@ class SubstractOperation {
 }
     
     class DivideOperation {
-        func division(_ num1: Int, _ num2: Int) -> Int {
+        func division(_ num1: Double, _ num2: Double) -> Double {
         return num1 / num2
     }
 }
+
+class RemainderOperation {
+    func remainder(_ num1: Int, _ num2: Int) -> Int {
+        return num1 % num2
+    }
+}
+
+
 
 let calculator = Calculator()
 print(calculator.add(2, 4))
 print(calculator.minus(3, 1))
 print(calculator.multiply(2, 3))
-print(calculator.division(6, 2))
+print(calculator.division(20, 3))
+print(calculator.remainder(6, 4))
+
+
 
 
 ```
-나눗셈도 그렇고 소수점 계산까지 고려해서 Double로 시작을 했으나 결과가 소수점까지 나오는 게 지저분해서 Int로 전부 고쳤다. <br>
+나눗셈도 그렇고 소수점 계산까지 고려해서 Double로 시작을 했으나 결과가 소수점까지 나오는 게 지저분해서 나눗셈 빼고 Int로 전부 고쳤다. <br>
 정수일 땐 Int, 소수일 땐 Double로 출력되게 하고 싶은데 좀 더 배워야겠다.
 
