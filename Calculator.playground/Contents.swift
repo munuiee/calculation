@@ -1,0 +1,95 @@
+
+class Calculator {
+    
+    var num1: Double = 0
+    var num2: Double = 0
+    
+    // Operation 클래스들과 Calculator 클래스 연결
+    
+    let addResult = AddOperation()
+    let minusResult = SubstractOperation()
+    let multiplyResult = MultiplyOperation()
+    let divisionResult = DivideOperation()
+    let remainderResult = RemainderOperation()
+    
+    
+    
+    func add(_ num1: Int, _ num2: Int) -> Int {
+        return addResult.add(num1, num2)
+    }
+    
+    func minus(_ num1: Int, _ num2: Int) -> Int {
+        return minusResult.minus(num1, num2)
+    }
+    
+    func multiply(_ num1: Int, _ num2: Int) -> Int {
+        return multiplyResult.multiply(num1, num2)
+    }
+    
+    
+    // 분모가 0인 경우 대비
+    
+    func division(_ num1: Double, _ num2: Double) -> Double {
+        if num2 == 0 {
+            print("0으로 나눌 수 없습니다.")
+            return 0
+        } else {
+            return divisionResult.division(num1, num2)
+        }
+    }
+    
+    func remainder(_ num1: Int, _ num2: Int) -> Int {
+        if num2 == 0 {
+            print("0으로 나눌 수 없습니다.")
+            return 0
+        } else {
+            return remainderResult.remainder(num1, num2)
+        }
+    }
+
+  
+}
+
+
+// Operation 클래스들
+
+class AddOperation {
+     func add(_ num1: Int, _ num2: Int) -> Int {
+        return num1 + num2
+    }
+}
+
+
+class SubstractOperation {
+     func minus(_ num1: Int, _ num2: Int) -> Int {
+        return num1 - num2
+    }
+}
+
+    class MultiplyOperation {
+        func multiply(_ num1: Int, _ num2: Int) -> Int {
+        return num1 * num2
+    }
+}
+    
+    class DivideOperation {
+        func division(_ num1: Double, _ num2: Double) -> Double {
+        return num1 / num2
+    }
+}
+
+class RemainderOperation {
+    func remainder(_ num1: Int, _ num2: Int) -> Int {
+        return num1 % num2
+    }
+}
+
+
+
+let calculator = Calculator()
+print(calculator.add(2, 4))
+print(calculator.minus(3, 1))
+print(calculator.multiply(2, 3))
+print(calculator.division(20, 3))
+print(calculator.remainder(6, 4))
+
