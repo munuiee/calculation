@@ -448,7 +448,7 @@ class Calculator {
 
 <br>
 
-```siwft
+```swift
 class Calculator {
     
     var operation: Operation
@@ -468,16 +468,6 @@ class Calculator {
     
     let calculators: [Operation] = [AddOperation(), SubstractOperation(), MultiplyOperation(), DivideOperation()]
 
-    
-//    func result() {
-//        for a in calculators {
-//            a.result(num1, num2)
-//        }
-//        print(operation.result(num1, num2))
-//    }
-    
-    
-    
     func resultAddOperation(_ num1: Double, num2: Double) -> Double {
         return add.result(num1, num2)
     }
