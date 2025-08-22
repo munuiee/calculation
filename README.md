@@ -788,3 +788,81 @@ print(calculator.division(6, 0))
 
 
 ```
+
+# 최종 수정
+```swift
+
+class Calculator {
+    
+    var num1: Double = 0
+    var num2: Double = 0
+    
+    let addResult = AddOperation()
+    let minusResult = SubstractOperation()
+    let multiplyResult = MultiplyOperation()
+    let divisionResult = DivideOperation()
+    
+    
+    
+    func add(_ num1: Int, _ num2: Int) -> Int {
+        return addResult.add(num1, num2)
+    }
+    
+    func minus(_ num1: Int, _ num2: Int) -> Int {
+        return minusResult.minus(num1, num2)
+    }
+    
+    func multiply(_ num1: Int, _ num2: Int) -> Int {
+        return multiplyResult.multiply(num1, num2)
+    }
+    
+    func division(_ num1: Int, _ num2: Int) -> Int {
+        if num2 == 0 {
+            print("0으로 나눌 수 없습니다.")
+            return 0
+        } else {
+            return divisionResult.division(num1, num2)
+        }
+    }
+
+  
+}
+
+
+
+class AddOperation {
+     func add(_ num1: Int, _ num2: Int) -> Int {
+        return num1 + num2
+    }
+}
+
+
+class SubstractOperation {
+     func minus(_ num1: Int, _ num2: Int) -> Int {
+        return num1 - num2
+    }
+}
+
+    class MultiplyOperation {
+        func multiply(_ num1: Int, _ num2: Int) -> Int {
+        return num1 * num2
+    }
+}
+    
+    class DivideOperation {
+        func division(_ num1: Int, _ num2: Int) -> Int {
+        return num1 / num2
+    }
+}
+
+let calculator = Calculator()
+print(calculator.add(2, 4))
+print(calculator.minus(3, 1))
+print(calculator.multiply(2, 3))
+print(calculator.division(6, 2))
+
+
+```
+나눗셈도 그렇고 소수점 계산까지 고려해서 Double로 시작을 했으나 결과가 소수점까지 나오는 게 지저분해서 Int로 전부 고쳤다. <br>
+정수일 땐 Int, 소수일 땐 Double로 출력되게 하고 싶은데 좀 더 배워야겠다.
+
