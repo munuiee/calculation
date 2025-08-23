@@ -626,7 +626,7 @@ class SubstractOperation {
 
 ```
 <br>
-일단 `override`와 `Operation`을 제거했더니 코드가 훨씬 깔끔해보인다.. ㅎ 그리고 result도 전부 바꿔줘야한다. <br>
+일단 `override` 와 `Operation` 을 제거했더니 코드가 훨씬 깔끔해보인다.. ㅎ 그리고 result도 전부 바꿔줘야한다. <br>
 
 그런데, 여기서 또 문제가 생겼다. `let calculator = Calculator()`를 해줬더니 파라미터를 자꾸 넣으라는 에러가 떴다. <br>
 
@@ -938,7 +938,7 @@ Class 안의 함수들을 `AbstractOperation` 프로토콜에 정의해주고 `A
 class Calculator: AbstractOperation { }
 ```
 <br>
-Calculator 클래스에 프로토콜 채택하가
+Calculator 클래스에 프로토콜 채택하기
 <br>
 그리고 수정하면서 처음에 기본값 초기화해준 것도 없앴다. 지역변수로 선언이 되기 때문에 필요가 없다는 것을 알게 되었다.
 
