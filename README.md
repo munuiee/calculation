@@ -806,7 +806,7 @@ class RemainderOperation {
 <br>
 
 
-# 최종 수정
+# 수정
 ```swift
 
 
@@ -877,13 +877,13 @@ class SubstractOperation {
     }
 }
 
-    class MultiplyOperation {
+class MultiplyOperation {
         func multiply(_ num1: Int, _ num2: Int) -> Int {
         return num1 * num2
     }
 }
     
-    class DivideOperation {
+class DivideOperation {
         func division(_ num1: Double, _ num2: Double) -> Double {
         return num1 / num2
     }
@@ -904,6 +904,148 @@ print(calculator.multiply(2, 3))
 print(calculator.division(20, 3))
 print(calculator.remainder(6, 4))
 
+
+
+
+```
+<br>
+
+# Lv4
+-  AbstractOperation라는 **추상화된** 프로토콜 만들기
+-  기존에 구현한 AddOperation(더하기), SubtractOperation(빼기), MultiplyOperation(곱하기), DivideOperation(나누기) 클래스들과 관계를 맺고 Calculator 클래스의 내부 코드를 변경
+
+<br>
+
+문법 종합반 프로토콜 강의를 듣고 프로토콜 만들기를 시도해보았다.
+
+<br>
+
+```swift
+protocol AbstractOperation: AnyObject {
+    func add(_ num1: Int, _ num2: Int) -> Int
+    func minus(_ num1: Int, _ num2: Int) -> Int
+    func multiply(_ num1: Int, _ num2: Int) -> Int
+    func division(_ num1: Double, _ num2: Double) -> Double
+    func remainder(_ num1: Int, _ num2: Int) -> Int
+}
+```
+
+Class 안의 함수들을 `AbstractOperation` 프로토콜에 정의해주고 `AnyObject`를 채택하여 클래스 전용 프로토콜로 만들었다.
+
+<br>
+
+```swift
+class Calculator: AbstractOperation { }
+```
+<br>
+Calculator 클래스에 프로토콜 채택하가
+<br>
+그리고 수정하면서 처음에 기본값 초기화해준 것도 없앴다. 지역변수로 선언이 되기 때문에 필요가 없다는 것을 알게 되었다.
+
+<br>
+
+# 최종 수정 
+```swift
+
+protocol AbstractOperation: AnyObject {
+    func add(_ num1: Int, _ num2: Int) -> Int
+    func minus(_ num1: Int, _ num2: Int) -> Int
+    func multiply(_ num1: Int, _ num2: Int) -> Int
+    func division(_ num1: Double, _ num2: Double) -> Double
+    func remainder(_ num1: Int, _ num2: Int) -> Int
+}
+
+class Calculator: AbstractOperation {
+
+    
+    // Operation 클래스들과 Calculator 클래스 연결
+    
+    let addResult = AddOperation()
+    let minusResult = SubstractOperation()
+    let multiplyResult = MultiplyOperation()
+    let divisionResult = DivideOperation()
+    let remainderResult = RemainderOperation()
+    
+    
+    
+    func add(_ num1: Int, _ num2: Int) -> Int {
+        return addResult.add(num1, num2)
+    }
+    
+    func minus(_ num1: Int, _ num2: Int) -> Int {
+        return minusResult.minus(num1, num2)
+    }
+    
+    func multiply(_ num1: Int, _ num2: Int) -> Int {
+        return multiplyResult.multiply(num1, num2)
+    }
+    
+    
+    // 분모가 0인 경우 대비
+    
+    func division(_ num1: Double, _ num2: Double) -> Double {
+        if num2 == 0 {
+            print("0으로 나눌 수 없습니다.")
+            return 0
+        } else {
+            return divisionResult.division(num1, num2)
+        }
+    }
+    
+    func remainder(_ num1: Int, _ num2: Int) -> Int {
+        if num2 == 0 {
+            print("0으로 나눌 수 없습니다.")
+            return 0
+        } else {
+            return remainderResult.remainder(num1, num2)
+        }
+    }
+
+  
+}
+
+
+// Operation 클래스들
+
+class AddOperation {
+     func add(_ num1: Int, _ num2: Int) -> Int {
+        return num1 + num2
+    }
+}
+
+
+class SubstractOperation {
+     func minus(_ num1: Int, _ num2: Int) -> Int {
+        return num1 - num2
+    }
+}
+
+class MultiplyOperation {
+        func multiply(_ num1: Int, _ num2: Int) -> Int {
+        return num1 * num2
+    }
+}
+    
+class DivideOperation {
+        func division(_ num1: Double, _ num2: Double) -> Double {
+        return num1 / num2
+    }
+}
+
+class RemainderOperation {
+    func remainder(_ num1: Int, _ num2: Int) -> Int {
+        return num1 % num2
+    }
+}
+
+
+
+let calculator = Calculator()
+print(calculator.add(2, 4))
+print(calculator.minus(3, 1))
+print(calculator.multiply(2, 3))
+print(calculator.division(20, 3))
+print(calculator.remainder(6, 4))
 
 
 
