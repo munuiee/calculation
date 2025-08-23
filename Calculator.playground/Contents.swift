@@ -1,8 +1,14 @@
 
-class Calculator {
-    
-    var num1: Double = 0
-    var num2: Double = 0
+protocol AbstractOperation: AnyObject {
+    func add(_ num1: Int, _ num2: Int) -> Int
+    func minus(_ num1: Int, _ num2: Int) -> Int
+    func multiply(_ num1: Int, _ num2: Int) -> Int
+    func division(_ num1: Double, _ num2: Double) -> Double
+    func remainder(_ num1: Int, _ num2: Int) -> Int
+}
+
+class Calculator: AbstractOperation {
+
     
     // Operation 클래스들과 Calculator 클래스 연결
     
@@ -66,13 +72,13 @@ class SubstractOperation {
     }
 }
 
-    class MultiplyOperation {
+class MultiplyOperation {
         func multiply(_ num1: Int, _ num2: Int) -> Int {
         return num1 * num2
     }
 }
     
-    class DivideOperation {
+class DivideOperation {
         func division(_ num1: Double, _ num2: Double) -> Double {
         return num1 / num2
     }
@@ -92,4 +98,5 @@ print(calculator.minus(3, 1))
 print(calculator.multiply(2, 3))
 print(calculator.division(20, 3))
 print(calculator.remainder(6, 4))
+
 
