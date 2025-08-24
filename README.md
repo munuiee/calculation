@@ -135,6 +135,15 @@ print(calculator.remainder(6, 4))
 
 # 과정
 
+- Lv1. `switch` 문 사용하여 구현
+- Lv2. 나머지 연산 추가 및 예외처리 고려
+- Lv3. Composition & 상속 시도
+- Lv4. 프로토콜 구현
+
+
+
+
+
 <br>
 
 # Lv1
