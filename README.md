@@ -62,15 +62,20 @@ print(addResult)
  case "%":
             return num1 % num2
 ```
+
 우선 나름대로 나머지 연산 코드를 넣어봤는데
 `'%' is unavailable: For floating point numbers use truncatingRemainder instead` 이런 오류가 떴다.
+
 <br>
 
 알아보니 `Double` 타입의 데이터를 나머지 연산할 때 `truncatingRemainder` 메서드를 사용해야 한다고 한다. 
+
 ```swift
 case "%":
             return num1.truncatingRemainder(dividingBy: num2)
 ```
+
+<br>
 코드를 이렇게 바꿔주니 에러가 사라졌다.
 
 <br>
@@ -84,6 +89,7 @@ let remainResult = calculator.calculate(cal: "%")
 print(remainResult)
 ```
 
+<br>
 
 나머지 함수도 선언해주고 실행해보았다 <br>
 ![](https://velog.velcdn.com/images/jihyee10/post/ed26579a-3ad2-4516-9abc-9c754713d544/image.png)
@@ -167,14 +173,13 @@ print(remainResult)
 
 ```
 
-여기서 문제점: 코드가 너무 지저분해 보인다... 방법을 찾아봐야 할 듯 하다.
 
 <br>
 
 # Lv3
   - 아래 각각의 클래스들을 만들고 클래스간의 관계를 고려하여 Calculator 클래스와 관계 맺기
        -  AddOperation(더하기)
-       -  SubstractOperation(빼기)
+       -  SubtractOperation(빼기)
        -  MultiplyOperation(곱하기)
        -  DivideOperation(나누기)
    
@@ -187,6 +192,9 @@ print(remainResult)
 #### 복합관계 (Composition)
 * 한 클래스 안에 다른 클래스를 속성으로 두는 것.
 * 예: Car 클래스 안에 Engine 객체가 들어가 있으면, 차는 엔진을 갖는다 라는 관계가 됨
+
+<br>
+
 ```swift
 class Engine {
     func start() {
@@ -245,7 +253,7 @@ class AddOperation {
     }
 }
 
-class SubstractOperation {
+class SubtractOperation {
     func minusResult(_ num1: Double, _ num2: Double) -> Double {
         return num1 - num2
     }
@@ -290,7 +298,7 @@ class Calculator {
     }
     
     let add = AddOperation()
-    let minus = SubstractOperation()
+    let minus = SubtractOperation()
     let multiply = MultiplyOperation()
     let division = DivideOperation()
     
@@ -312,7 +320,7 @@ class AddOperation {
  
 }
 
-class SubstractOperation {
+class SubtractOperation {
     func minusResult(_ num1: Double, _ num2: Double) -> Double {
         return num1 - num2
     }
@@ -333,20 +341,21 @@ class DivideOperation {
 
 
 ```
+<br>
 
 우선 출력값은 잘 나오지만.. 이 다음이 문제. 내일 더 고민해봐야겠다.
 
-<br>
 <br>
 
 ## 0821 목요일
 뭔가 많은 수정을 했는데... <br>
 
-우선 위의 코드가 너무 정신 없어 코드를 최대한 줄여보고 싶은 욕심이 컸다. 그리고 Calculator 클래스와 아래 연산 클래스들을 연결을 해야 했다.<br>
+우선 위의 코드가 너무 정신 없어 코드를 최대한 덜어내고 싶은 욕심이 컸다. 그리고 Calculator 클래스와 아래 연산 클래스들을 연결을 해야 했다.<br>
 
 오늘 enum을 배웠는데, enum으로 해보면 어떨까 도전해봤다가 도저히 감이 안 잡혀서 여러 방법을 찾아보았다. Class끼리 연결하는 것이 첫 번째 목적이었기 때문에..  <br>
 
 #### 첫 번째로 생각한 방법
+
 <br>
 함수를 튜플로 리턴하는 거였다. 각각 클래스별로 함수로 묶어 리턴하는 게 초보자인 내가 봐도 지저분해보였기 때문에...
 <br>
@@ -366,15 +375,19 @@ class DivideOperation {
 ```swift
  func calculate() -> Double {
         return add.addResult(num1, num2), 
-        minus.SubstractOperation()
+        minus.SubtractOperation()
     }
 ```
+
+<br>
+
 이런식으로..? 보니까 리턴도 이렇게 콤마로 할 수 있더란다..
 근데!! 내가 봐도 이건 좀 이상했다. 그리고 많은 코드에서 자꾸 에러가 났다 😭
 
 <br>
 
 #### 두 번째로 생각한 방법
+
 <br>
 저 아래 연산 클래스들을 하나의 클래스로 묶어 결과를 리턴하는 것이었다. 구글링을 해봤는데 여러 예제 중에 override가 있었다. 함수명을 같게 해서 override를 해주면 된다고 했다. <br>
 즉 Operation은 부모 클래스, 나머지 연산 클래스들을 자식으로 삼는 것이다.
@@ -394,7 +407,7 @@ class AddOperation:  Operation {
 }
 
 
-class SubstractOperation: Operation {
+class SubtractOperation: Operation {
     override func result(_ num1: Double, _ num2: Double) -> Double {
         return num1 - num2
     }
@@ -412,7 +425,6 @@ class SubstractOperation: Operation {
     }
 }
 
-let calculators: [Operation] = [AddOperation(), SubstractOperation(), MultiplyOperation(), DivideOperation()]
 
 for a in calculators {
     a.result(1, 1)
@@ -420,8 +432,12 @@ for a in calculators {
 ```
 
 <br>
-‼️ `Method does not override any method from its superclass`
+
+`Method does not override any method from its superclass`
+
+
 하다보니 이런 오류가 생겼다. 상속을 쓸 때 무조건 함수 모양이 부모랑 같아야하는데 부모 클래스에 함수 정의가 없어서란다.. 그래서 Operation 클래스에 파라미터와 반환값, 리턴값을 추가해줬더니 해결했다.
+
 <br>
 
 암튼 배열을 주고 반복문으로 결과를 출력시켰는데 오잉 코드가 돌아가긴 돌아간다. 근데!! 이게 맞는지 모르겠는게, 일단 Calculator 클래스와 관계를 맺지 않았다. <br>
@@ -462,7 +478,7 @@ class Calculator {
     var num2: Double
     
     let add = AddOperation()
-    let minus = SubstractOperation()
+    let minus = SubtractOperation()
     let multiply = MultiplyOperation()
     let division = DivideOperation()
     
@@ -472,13 +488,12 @@ class Calculator {
         self.operation = operation
     }
     
-    let calculators: [Operation] = [AddOperation(), SubstractOperation(), MultiplyOperation(), DivideOperation()]
 
     func resultAddOperation(_ num1: Double, num2: Double) -> Double {
         return add.result(num1, num2)
     }
     
-    func resultSubstractOperation(_ num1: Double, num2: Double) -> Double {
+    func resultSubtractOperation(_ num1: Double, num2: Double) -> Double {
         return minus.result(num1, num2)
     }
     
@@ -501,8 +516,6 @@ class Calculator {
 
 
 class Operation {
- 
-    
     func result(_ num1: Double, _ num2: Double) -> Double {
         return 0
     }
@@ -515,26 +528,27 @@ class AddOperation:  Operation {
 }
 
 
-class SubstractOperation: Operation {
+class SubtractOperation: Operation {
     override func result(_ num1: Double, _ num2: Double) -> Double {
         return num1 - num2
     }
 }
 
-    class MultiplyOperation: Operation {
+class MultiplyOperation: Operation {
         override func result(_ num1: Double, _ num2: Double) -> Double {
         return num1 * num2
     }
 }
     
-    class DivideOperation: Operation {
+class DivideOperation: Operation {
         override func result(_ num1: Double, _ num2: Double) -> Double {
         return num1 / num2
     }
 }
 
 ```
-너무나도 뚱뚱해져버린 코드... Operation 클래스를 만들고 배열로 보내면서 뭔가 더 복잡해진 느낌이다. 원래 내 목적은 **Operation 클래스에 연산 클래스들을 연결시켜 결과값을 도출하게 하고 이걸 Calculator 클래스에 연결해서 출력하는 것** 이었는데, override를 쓰고 배열을 쓰게 되면서 너무 정신 없어진 것 같아 수정을 또다시...
+
+음 Operation 클래스를 만들고 배열로 보내면서 뭔가 더 복잡해진 느낌이다. 원래 내 목적은 **Operation 클래스에 연산 클래스들을 연결시켜 결과값을 도출하게 하고 이걸 Calculator 클래스에 연결해서 출력하는 것** 이었는데, override를 쓰게 되면서 사실 간단한 코드를 너무 꼬아 생각하고 있는 거 아닌가? 하는 생각이 들었다.
 
 <br>
 
@@ -550,6 +564,9 @@ class SubstractOperation: Operation {
     }
 
 ```
+
+<br>
+
 그래서 간단하게 추가해주었다. num2가 0일 때 "0으로 나눌 수 없습니다!"를 출력하고 return을 0으로 하는 것이다.
 
 <br>
@@ -563,7 +580,7 @@ class Calculator {
     var num2: Double
     
     let add = AddOperation()
-    let minus = SubstractOperation()
+    let minus = SubtractOperation()
     let multiply = MultiplyOperation()
     let division = DivideOperation()
     
@@ -578,7 +595,7 @@ class Calculator {
         return add.result(num1, num2)
     }
     
-    func resultSubstractOperation(_ num1: Double, num2: Double) -> Double {
+    func resultSubtractOperation(_ num1: Double, num2: Double) -> Double {
         return minus.result(num1, num2)
     }
     
@@ -607,7 +624,7 @@ class AddOperation {
 }
 
 
-class SubstractOperation {
+class SubtractOperation {
      func result(_ num1: Double, _ num2: Double) -> Double {
         return num1 - num2
     }
@@ -629,16 +646,17 @@ class SubstractOperation {
 
 ```
 <br>
-일단 `override` 와 `Operation` 을 제거했더니 코드가 훨씬 깔끔해보인다.. ㅎ 그리고 result도 전부 바꿔줘야한다. <br>
 
-그런데, 여기서 또 문제가 생겼다. `let calculator = Calculator()`를 해줬더니 파라미터를 자꾸 넣으라는 에러가 떴다. <br>
+그리고 Calculator 클래스와의 연결이 목적이고 굳이 제대로 배우지 않은 override를 쓰지 않아도 될 것 같아, `override` 와 `Operation` 을 제거했다. 그리고 result도 전부 바꿔줘야한다. <br>
+
+그런데, 여기서 또 문제가 생겼다. `let calculator = Calculator()` 를 해줬더니 파라미터를 자꾸 넣으라는 에러가 떴다. <br>
 
 ```swift
 var num1: Double
 var num2: Double
     
  let add = AddOperation()
- let minus = SubstractOperation()
+ let minus = SubtractOperation()
  let multiply = MultiplyOperation()
  let division = DivideOperation()
     
@@ -660,17 +678,19 @@ func resultAddOperation(_ num1: Double, num2: Double) -> Double {
 
 ```
 <br>
-내가 num2에만 언더스코어를 안 넣어줬다..
+
+내가 num2에만 언더스코어를 안 넣어줘 오류가 난 것이었다.
 
 <br>
 
 ```swift
 let addResult = AddOperation()
-let minusResult = SubstractOperation()
+let minusResult = SubtractOperation()
 let multiplyResult = MultiplyOperation()
 let divisionResult = DivideOperation()
 ```
 <br>
+
 let으로 Calculator 클래스에 연산 클래스들을 연결해주었다.
 
 <br>
@@ -698,7 +718,9 @@ let으로 Calculator 클래스에 연산 클래스들을 연결해주었다.
     }
 ```
 <br>
-Calculator 클래스 안의 함수명을 간단하게 바꿔주었다. 깔끔하고 보기좋다!
+
+Calculator 클래스 안의 함수명을 간단하게 바꿔주었다.
+
 <br>
 
 ```swift
@@ -730,7 +752,7 @@ class Calculator {
     var num2: Double = 0
     
     let addResult = AddOperation()
-    let minusResult = SubstractOperation()
+    let minusResult = SubtractOperation()
     let multiplyResult = MultiplyOperation()
     let divisionResult = DivideOperation()
     
@@ -769,19 +791,19 @@ class AddOperation {
 }
 
 
-class SubstractOperation {
+class SubtractOperation {
      func minus(_ num1: Double, _ num2: Double) -> Double {
         return num1 - num2
     }
 }
 
-    class MultiplyOperation {
+class MultiplyOperation {
         func multiply(_ num1: Double, _ num2: Double) -> Double {
         return num1 * num2
     }
 }
     
-    class DivideOperation {
+class DivideOperation {
         func division(_ num1: Double, _ num2: Double) -> Double {
         return num1 / num2
     }
@@ -821,7 +843,7 @@ class Calculator {
     // Operation 클래스들과 Calculator 클래스 연결
     
     let addResult = AddOperation()
-    let minusResult = SubstractOperation()
+    let minusResult = SubtractOperation()
     let multiplyResult = MultiplyOperation()
     let divisionResult = DivideOperation()
     let remainderResult = RemainderOperation()
@@ -874,7 +896,7 @@ class AddOperation {
 }
 
 
-class SubstractOperation {
+class SubtractOperation {
      func minus(_ num1: Int, _ num2: Int) -> Int {
         return num1 - num2
     }
@@ -966,7 +988,7 @@ class Calculator: AbstractOperation {
     // Operation 클래스들과 Calculator 클래스 연결
     
     let addResult = AddOperation()
-    let minusResult = SubstractOperation()
+    let minusResult = SubtractOperation()
     let multiplyResult = MultiplyOperation()
     let divisionResult = DivideOperation()
     let remainderResult = RemainderOperation()
@@ -1019,7 +1041,7 @@ class AddOperation {
 }
 
 
-class SubstractOperation {
+class SubtractOperation {
      func minus(_ num1: Int, _ num2: Int) -> Int {
         return num1 - num2
     }
