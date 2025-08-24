@@ -350,15 +350,18 @@ class DivideOperation {
 <br>
 함수를 튜플로 리턴하는 거였다. 각각 클래스별로 함수로 묶어 리턴하는 게 초보자인 내가 봐도 지저분해보였기 때문에...
 <br>
+
 ```swift
  func calculate() -> Double {
         return add.addResult(num1, num2)
     }
    
 ```
+
 <br>
 그래서 이 함수를
 <br>
+
 
 ```swift
  func calculate() -> Double {
