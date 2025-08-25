@@ -357,12 +357,16 @@ class AddOperation:  Operation {
 
 #### 🎯 트러블 슈팅
 
+##### 1
+
 ```swift
 Return from initializer without initializing all stored properties
 ```
 프로퍼티 초기화 누락으로 생긴 에러로 var num1: Int = 0 기본값을 줌으로써 해결되었다.
 
 <br>
+
+##### 2
 
 ```swift
 Missing argument label 'num2:' in call
@@ -378,6 +382,8 @@ func add(_ num1: Int, num2: Int) -> Int
 훑어보니 전부 `num2` 에만 언더스코어가 누락되어 있어 추가해주었고 해결되었다.
 
 <br>
+
+##### 3
 
 ```swift
 Method does not override any method from its superclass
