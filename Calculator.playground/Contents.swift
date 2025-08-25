@@ -11,7 +11,6 @@ class Calculator: AbstractOperation {
 
     
     // Operation 클래스들과 Calculator 클래스 연결
-    
     let addResult = AddOperation()
     let minusResult = SubtractOperation()
     let multiplyResult = MultiplyOperation()
@@ -33,8 +32,7 @@ class Calculator: AbstractOperation {
     }
     
     
-    // 분모가 0인 경우 대비
-    
+    // 분모가 0인 경우 예외처리
     func division(_ num1: Int, _ num2: Int) -> Double? {
         guard num2 != 0 else { return nil }
             return divisionResult.division(num1, num2)
@@ -50,7 +48,6 @@ class Calculator: AbstractOperation {
 
 
 // Operation 클래스들
-
 class AddOperation {
      func add(_ num1: Int, _ num2: Int) -> Int {
         return num1 + num2
