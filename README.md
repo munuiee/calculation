@@ -1,7 +1,7 @@
 # Ch 2. 프로그래밍 기초 주차 과제
 
 # summary
-- Xcode playground로 실행
+- Xcode playground Swift ver 5 로 실행
 - 목표: Swift로 계산기 만들기
 - 포인트: 0 나눗셈 예외 처리, 여러 설계 시도(스위치/컴포지션/상속(오버라이드)/프로토콜)
 
