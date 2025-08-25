@@ -252,7 +252,7 @@ print(remainResult)
 
    func division(_ num1: Double, _ num2: Double) -> Double? {
         if num2 == 0 {
-            return 0
+            return nil
         } else {
             return divisionResult.division(num1, num2)
         }
@@ -436,7 +436,7 @@ let divisionResult = DivideOperation()
     
     func division(_ num1: Double, _ num2: Double) -> Double? {
         if num2 == 0 {
-            return 0
+            return nil
         } else {
             return divisionResult.division(num1, num2)
         }
