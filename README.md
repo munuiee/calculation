@@ -1,4 +1,7 @@
 # Ch 2. 프로그래밍 기초 주차 과제
+## Swift로 계산기 만들기
+2025년 8월 20일 - 2025년 8월 25일 
+
 
 # summary
 - Xcode playground Swift ver 5 로 실행
