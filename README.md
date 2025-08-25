@@ -137,6 +137,10 @@ print(calculator.remainder(6, 4) ?? 0)
 
 <br>
 
+#### 8월 20일
+
+<br>
+
 # Lv1
 - 더하기, 빼기, 나누기, 곱하기 연산을 수행할 수 있는 Calculator 클래스를 만들기
 - 생성한 클래스를 이용하여 연산을 진행하고 출력
@@ -198,9 +202,13 @@ print(addResult)
 <br>
 
 ### Lv2. 나머지 연산 추가 및 예외처리 고려
-Double 타입에서 `%` 연산자 사용시 `truncatingRemainder(dividingBy:)` 메서드를 사용해야 한다는 것을 알았다.
+
+#### 🎯 트러블 슈팅
 
 <br>
+
+Double 타입에서 `%` 연산자 사용시 `truncatingRemainder(dividingBy:)` 메서드를 사용해야 한다는 것을 알았다.
+
 
 ```swift
 case "%":
@@ -212,7 +220,8 @@ case "%":
 
 <br>
 
-알아보니 `Double` 타입의 데이터를 나머지 연산할 때 `truncatingRemainder` 메서드를 사용해야 한다고 한다. 
+알아보니 % 연산자는 Int에만 정의가 되어있기 때문에 Double에선 사용이 불가능하다고 한다. <br>
+`Double` 타입의 데이터를 나머지 연산할 때는 `truncatingRemainder` 메서드를 사용한다. 
 
 ```swift
 case "%":
@@ -220,7 +229,7 @@ case "%":
 ```
 
 <br>
-함수에도 추가
+함수에도 추가하여 전체적인 에러를 해결하였다.
 
 
 
@@ -232,6 +241,8 @@ func remainResult() -> Double {
 let remainResult = calculator.calculate(cal: "%")
 print(remainResult)
 ```
+
+
 
 <br>
 
@@ -258,6 +269,7 @@ print(calculator.division(20, 3) ?? 0)
 <br>
 <br>
 
+---
 
 # Lv3
   - 아래 각각의 클래스들을 만들고 클래스간의 관계를 고려하여 Calculator 클래스와 관계 맺기
@@ -331,10 +343,27 @@ class AddOperation:  Operation {
 
 하지만 여러 고민 끝에 `override` 를 사용하지 않아도 충분히 구현 가능하다는 것을 깨달았다. <br>
 그래서 `let` 을 이용해 Calculator 클래스에 연산 클래스들을 연결해주었다.
-- 문제: 
-  - `Return from initializer without initializing all stored properties`  오류 → 프로퍼티 초기화 누락  
-  - `Missing argument label 'num2:' in call` → 파라미터 언더스코어 누락  
+<br>
 
+
+#### 🎯 트러블 슈팅
+
+
+##### `Return from initializer without initializing all stored properties`  에러
+프로퍼티 초기화 누락으로 생긴 에러로 var num1: Int = 0 기본값을 줌으로써 해결되었다.
+
+<br>
+
+##### `Missing argument label 'num2:' in call` 
+해결방법: 파라미터 언더스코어 누락으로 생긴 오류이다. <br>
+```swift
+func add(_ num1: Int, num2: Int) -> Int
+```
+<br>
+
+훑어보니 전부 `num2` 에만 언더스코어가 누락되어 있어 추가해주었고 해결되었다.
+
+<br>
 
 
 <details>
@@ -467,7 +496,7 @@ class RemainderOperation {
 <br>
 
 
-
+---
 
 # Lv4
 -  AbstractOperation라는 **추상화된** 프로토콜 만들기
