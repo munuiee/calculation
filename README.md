@@ -379,6 +379,14 @@ func add(_ num1: Int, num2: Int) -> Int
 
 <br>
 
+```swift
+Method does not override any method from its superclass
+```
+두 번째 방법으로 하다보니 이런 오류가 생겼다. 상속을 쓸 때 무조건 함수 모양이 부모랑 같아야 하는데 부모 클래스에 함수 정의가 없어 생긴 에러였다. <br>
+Operation 클래스에 파라미터와 반환값, 리턴값을 추가해줘 해결하였다.
+
+<br>
+
 
 <details>
 <summary>복합관계 Composition</summary>
