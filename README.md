@@ -207,7 +207,7 @@ print(addResult)
 <br>
 
 ### Lv2. 나머지 연산 추가 및 예외처리 고려
-Double 타입에서 `%` 연산자 사용시 `truncatingRemainder(dividingBy:)` 메서드 사용해야 한다는 것을 알았다.
+Double 타입에서 `%` 연산자 사용시 `truncatingRemainder(dividingBy:)` 메서드를 사용해야 한다는 것을 알았다.
 
 <br>
 
@@ -246,19 +246,25 @@ print(remainResult)
 
 ##### 예외처리 상황
 나는 여기서 대체 어떤 예외처리가 난다는 걸까 하고 고민을 했는데도 답이 안 나왔다. <br>
-그러다가 우리팀원끼리 코드리뷰를 하면서 알게되었다. 나누기를 했을 때 분모가 0이면 어떻게 처리를 해야할지에 대하여. <br>
+그러다가 우리팀원끼리 코드리뷰를 하면서 알게되었고, 나누기를 했을 때 분모가 0이면 어떻게 처리를 해야할지 생각해보았다. <br>
 
 ```swift
-    if num2 == 0 {    
-        print("0으로 나눌 수 없습니다!")
-        return 0      
-    } else {
-        return division.result(num1, num2)
+   func division(_ num1: Double, _ num2: Double) -> Double? {
+        if num2 == 0 {
+            print("0으로 나눌 수 없습니다.")
+            return 0
+        } else {
+            return divisionResult.division(num1, num2)
+        }
     }
 
+print(calculator.division(20, 3) ?? 0) 
+
 ```
+<br>
+우선 Double에 `?` 를 붙여 옵셔널 처리 해주고, 병합 연산자 `??`를 이용해 옵셔널을 안전하게 처리해주었다.
 
-
+<br>
 <br>
 
 
