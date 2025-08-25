@@ -593,7 +593,6 @@ Type 'Calculator' does not conform to protocol 'AbstractOperation'
 프로토콜의 매개변수 타입도 Calculator 클래스의 메서드와 똑같이 변경해주어야 한다.
 
 ```
-
 protocol AbstractOperation: AnyObject {
     func division(_ num1: Int, _ num2: Int) -> Double?
 }
