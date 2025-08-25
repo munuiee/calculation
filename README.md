@@ -52,19 +52,13 @@ class Calculator: AbstractOperation {
     // 분모가 0인 경우 대비
     
     func division(_ num1: Double, _ num2: Double) -> Double? {
-        if num2 == 0 {
-            return nil
-        } else {
+        guard num2 != 0 else { return nil }
             return divisionResult.division(num1, num2)
-        }
     }
     
     func remainder(_ num1: Int, _ num2: Int) -> Int? {
-        if num2 == 0 {
-            return nil
-        } else {
+        guard num2 != 0 else { return nil }
             return remainderResult.remainder(num1, num2)
-        }
     }
 
   
@@ -112,7 +106,6 @@ print(calculator.minus(3, 1))
 print(calculator.multiply(2, 3))
 print(calculator.division(20, 3) ?? 0) // 옵셔널이 nil이면 0을 대신 출력
 print(calculator.remainder(6, 4) ?? 0)
-
 
 
 ```
@@ -232,8 +225,8 @@ case "%":
 
 
 ```swift
- func remainResult() -> Double {
-        return num1.truncatingRemainder(dividingBy: num2)
+func remainResult() -> Double {
+      return num1.truncatingRemainder(dividingBy: num2)
     }
     
 let remainResult = calculator.calculate(cal: "%")
@@ -245,18 +238,16 @@ print(remainResult)
 ##### 예외처리 상황
 나는 여기서 대체 어떤 예외처리가 난다는 걸까 하고 고민을 했는데도 답이 안 나왔다. <br>
 그러다가 우리팀원끼리 코드리뷰를 하면서 알게되었고, 나누기를 했을 때 분모가 0이면 어떻게 처리를 해야할지 생각해보았다. <br>
+특정 조건이 맞지 않으면 즉시 종료되는 guard를 사용하였다. <br>
 
 ```swift
 
 // 최종 예외처리 코드
 
-   func division(_ num1: Double, _ num2: Double) -> Double? {
-        if num2 == 0 {
-            return nil
-        } else {
-            return divisionResult.division(num1, num2)
-        }
-    }
+func division(_ num1: Double, _ num2: Double) -> Double? {
+    guard num2 != 0 else { return nil }
+        return divisionResult.division(num1, num2)
+}
 
 print(calculator.division(20, 3) ?? 0) 
 
@@ -435,11 +426,8 @@ let divisionResult = DivideOperation()
     }
     
     func division(_ num1: Double, _ num2: Double) -> Double? {
-        if num2 == 0 {
-            return nil
-        } else {
+        guard num2 != 0 else { return nil }
             return divisionResult.division(num1, num2)
-        }
     }
 ```
 <br>
@@ -452,22 +440,18 @@ let calculator = Calculator()
 print(calculator.add(2, 4))
 print(calculator.minus(3, 1))
 print(calculator.multiply(2, 3))
-print(calculator.division(6, 0))
+print(calculator.division(20, 3) ?? 0) // 옵셔널이 nil이면 0을 대신 출력
+print(calculator.remainder(6, 4) ?? 0)
 ```
 <br>
 
-결과를 출력해본다.
+##### 출력된 결과
+<br>
 
-```swift
-6.0
-2.0
-6.0
-0으로 나눌 수 없습니다.
-0.0
-```
+<img width="257" height="107" alt="스크린샷 2025-08-25 오전 9 54 12" src="https://github.com/user-attachments/assets/d2a12eba-faa0-4fe5-af88-69408c80edf3" />
 
 <br>
-출력이 잘 된다.
+<br>
 
 
 ##### 나머지 연산 추가
