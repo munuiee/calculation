@@ -19,8 +19,8 @@ protocol AbstractOperation: AnyObject {
     func add(_ num1: Int, _ num2: Int) -> Int
     func minus(_ num1: Int, _ num2: Int) -> Int
     func multiply(_ num1: Int, _ num2: Int) -> Int
-    func division(_ num1: Double, _ num2: Double) -> Double
-    func remainder(_ num1: Int, _ num2: Int) -> Int
+    func division(_ num1: Double, _ num2: Double) -> Double?
+    func remainder(_ num1: Int, _ num2: Int) -> Int?
 }
 
 class Calculator: AbstractOperation {
@@ -51,19 +51,17 @@ class Calculator: AbstractOperation {
     
     // 분모가 0인 경우 대비
     
-    func division(_ num1: Double, _ num2: Double) -> Double {
+    func division(_ num1: Double, _ num2: Double) -> Double? {
         if num2 == 0 {
-            print("0으로 나눌 수 없습니다.")
-            return 0
+            return nil
         } else {
             return divisionResult.division(num1, num2)
         }
     }
     
-    func remainder(_ num1: Int, _ num2: Int) -> Int {
+    func remainder(_ num1: Int, _ num2: Int) -> Int? {
         if num2 == 0 {
-            print("0으로 나눌 수 없습니다.")
-            return 0
+            return nil
         } else {
             return remainderResult.remainder(num1, num2)
         }
@@ -89,13 +87,13 @@ class SubtractOperation {
 }
 
 class MultiplyOperation {
-        func multiply(_ num1: Int, _ num2: Int) -> Int {
+    func multiply(_ num1: Int, _ num2: Int) -> Int {
         return num1 * num2
     }
 }
     
 class DivideOperation {
-        func division(_ num1: Double, _ num2: Double) -> Double {
+    func division(_ num1: Double, _ num2: Double) -> Double {
         return num1 / num2
     }
 }
@@ -112,8 +110,8 @@ let calculator = Calculator()
 print(calculator.add(2, 4))
 print(calculator.minus(3, 1))
 print(calculator.multiply(2, 3))
-print(calculator.division(20, 3))
-print(calculator.remainder(6, 4))
+print(calculator.division(20, 3) ?? 0) // 옵셔널이 nil이면 0을 대신 출력
+print(calculator.remainder(6, 4) ?? 0)
 
 
 
@@ -249,9 +247,11 @@ print(remainResult)
 그러다가 우리팀원끼리 코드리뷰를 하면서 알게되었고, 나누기를 했을 때 분모가 0이면 어떻게 처리를 해야할지 생각해보았다. <br>
 
 ```swift
+
+// 최종 예외처리 코드
+
    func division(_ num1: Double, _ num2: Double) -> Double? {
         if num2 == 0 {
-            print("0으로 나눌 수 없습니다.")
             return 0
         } else {
             return divisionResult.division(num1, num2)
@@ -262,7 +262,7 @@ print(calculator.division(20, 3) ?? 0)
 
 ```
 <br>
-우선 Double에 `?` 를 붙여 옵셔널 처리 해주고, 병합 연산자 `??`를 이용해 옵셔널을 안전하게 처리해주었다.
+우선 Double에 `?`  를 붙여 옵셔널 처리 해주고, 병합 연산자 `??` 를 이용해 옵셔널을 안전하게 처리해주었다.
 
 <br>
 <br>
@@ -434,9 +434,8 @@ let divisionResult = DivideOperation()
         return multiplyResult.multiply(num1, num2)
     }
     
-    func division(_ num1: Double, _ num2: Double) -> Double {
+    func division(_ num1: Double, _ num2: Double) -> Double? {
         if num2 == 0 {
-            print("0으로 나눌 수 없습니다.")
             return 0
         } else {
             return divisionResult.division(num1, num2)
