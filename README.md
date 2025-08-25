@@ -543,7 +543,7 @@ protocol AbstractOperation: AnyObject {
     func add(_ num1: Int, _ num2: Int) -> Int
     func minus(_ num1: Int, _ num2: Int) -> Int
     func multiply(_ num1: Int, _ num2: Int) -> Int
-    func division(_ num1: Int, _ num2: Int) -> Double
+    func division(_ num1: Double, _ num2: Double) -> Double
     func remainder(_ num1: Int, _ num2: Int) -> Int
 }
 ```
