@@ -22,7 +22,7 @@ protocol AbstractOperation: AnyObject {
     func add(_ num1: Int, _ num2: Int) -> Int
     func minus(_ num1: Int, _ num2: Int) -> Int
     func multiply(_ num1: Int, _ num2: Int) -> Int
-    func division(_ num1: Double, _ num2: Double) -> Double?
+    func division(_ num1: Int, _ num2: Int) -> Double?
     func remainder(_ num1: Int, _ num2: Int) -> Int?
 }
 
@@ -37,7 +37,7 @@ class Calculator: AbstractOperation {
     let divisionResult = DivideOperation()
     let remainderResult = RemainderOperation()
     
-    
+
     
     func add(_ num1: Int, _ num2: Int) -> Int {
         return addResult.add(num1, num2)
@@ -54,7 +54,7 @@ class Calculator: AbstractOperation {
     
     // 분모가 0인 경우 대비
     
-    func division(_ num1: Double, _ num2: Double) -> Double? {
+    func division(_ num1: Int, _ num2: Int) -> Double? {
         guard num2 != 0 else { return nil }
             return divisionResult.division(num1, num2)
     }
@@ -90,8 +90,8 @@ class MultiplyOperation {
 }
     
 class DivideOperation {
-    func division(_ num1: Double, _ num2: Double) -> Double {
-        return num1 / num2
+    func division(_ num1: Int, _ num2: Int) -> Double {
+        return Double(num1) / Double(num2)
     }
 }
 
@@ -109,6 +109,7 @@ print(calculator.minus(3, 1))
 print(calculator.multiply(2, 3))
 print(calculator.division(20, 3) ?? 0) // 옵셔널이 nil이면 0을 대신 출력
 print(calculator.remainder(6, 4) ?? 0)
+
 
 
 ```
@@ -133,7 +134,7 @@ print(calculator.remainder(6, 4) ?? 0)
 - Lv2. 나머지 연산 추가 및 예외처리 고려
 - Lv3. Composition & 상속 시도
 - Lv4. 프로토콜 구현
-
+- 해설자료를 참고하여 수정
 
 
 
@@ -362,7 +363,7 @@ class AddOperation:  Operation {
 
 ##### 1
 
-```swift
+```
 Return from initializer without initializing all stored properties
 ```
 프로퍼티 초기화 누락으로 생긴 에러로 var num1: Int = 0 기본값을 줌으로써 해결되었다.
@@ -371,7 +372,7 @@ Return from initializer without initializing all stored properties
 
 ##### 2
 
-```swift
+```
 Missing argument label 'num2:' in call
 ```
 
@@ -388,7 +389,7 @@ func add(_ num1: Int, num2: Int) -> Int
 
 ##### 3
 
-```swift
+```
 Method does not override any method from its superclass
 ```
 두 번째 방법으로 하다보니 이런 오류가 생겼다. 상속을 쓸 때 무조건 함수 모양이 부모랑 같아야 하는데 부모 클래스에 함수 정의가 없어 생긴 에러였다. <br>
@@ -557,6 +558,48 @@ protocol AbstractOperation: AnyObject {
 class Calculator: AbstractOperation { }
 ```
 
+
+<br>
+
+#### 8월 25일
+
+과제 해설 영상을 보면서 나눗셈 메서드의 매개변수 타입을 Int로 두고 데이터 형변환을 이용하여 Double로 반환한 것을 보고 나도 시도해보았다. <br>
+
+```swift
+// 수정 전
+class DivideOperation {
+    func division(_ num1: Double, _ num2: Double) -> Double {
+        return num1 / num2
+    }
+}
+```
+
+```swift
+// 수정 후
+class DivideOperation {
+    func division(_ num1: Int, _ num2: Int) -> Double {
+        return Double(num1) / Double(num2)
+    }
+}
+```
+
+<br>
+
+#### 🎯 트러블 슈팅
+```
+Type 'Calculator' does not conform to protocol 'AbstractOperation'
+```
+
+프로토콜의 매개변수 타입도 Calculator 클래스의 메서드와 똑같이 변경해주어야 한다.
+
+```
+
+protocol AbstractOperation: AnyObject {
+    func division(_ num1: Int, _ num2: Int) -> Double?
+}
+```
+
+에러까지 해결완료 하였다.
 
 
 
