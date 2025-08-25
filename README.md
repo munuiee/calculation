@@ -207,7 +207,6 @@ print(addResult)
 
 <br>
 
-Double 타입에서 `%` 연산자 사용시 `truncatingRemainder(dividingBy:)` 메서드를 사용해야 한다는 것을 알았다.
 
 
 ```swift
@@ -216,12 +215,15 @@ case "%":
 ```
 
 나머지 연산을 위해 `%` 연산자를 그대로 사용했는데, <br>
-`'%' is unavailable: For floating point numbers use truncatingRemainder instead` 이런 오류가 떴다.
+```swift
+'%' is unavailable: For floating point numbers use truncatingRemainder instead
+```
+이런 오류가 떴다.
 
 <br>
 
 알아보니 % 연산자는 Int에만 정의가 되어있기 때문에 Double에선 사용이 불가능하다고 한다. <br>
-`Double` 타입의 데이터를 나머지 연산할 때는 `truncatingRemainder` 메서드를 사용한다. 
+Double 타입에서 `%` 연산자 사용시 `truncatingRemainder(dividingBy:)` 메서드를 사용해야 한다는 것을 알게되었다!
 
 ```swift
 case "%":
@@ -263,8 +265,15 @@ func division(_ num1: Double, _ num2: Double) -> Double? {
 print(calculator.division(20, 3) ?? 0) 
 
 ```
+우선 Double에 `?`  를 붙여 옵셔널 처리를 해주었다.
+
 <br>
-우선 Double에 `?`  를 붙여 옵셔널 처리 해주고, 병합 연산자 `??` 를 이용해 옵셔널을 안전하게 처리해주었다.
+
+```swift
+// 출력 결과
+Optional(6.6.666666666666667)
+```
+코드는 잘 돌아가지만 출력 결과가 이렇게 나와 병합 연산자 `??` 를 이용해 옵셔널을 안전하게 처리해주었다.
 
 <br>
 <br>
@@ -341,21 +350,26 @@ class AddOperation:  Operation {
 
 <br>
 
-하지만 여러 고민 끝에 `override` 를 사용하지 않아도 충분히 구현 가능하다는 것을 깨달았다. <br>
+하지만 내가 너무 어렵게 꼬아서 생각하는 건 아닐까 하는 의문이 들기 시작했다. 그리고 팀원들의 코드 리뷰를 보고 `override` 를 사용하지 않아도 충분히 구현 가능하다는 것을 깨달았다. <br>
 그래서 `let` 을 이용해 Calculator 클래스에 연산 클래스들을 연결해주었다.
 <br>
 
 
 #### 🎯 트러블 슈팅
 
-
-##### `Return from initializer without initializing all stored properties`  에러
+```swift
+Return from initializer without initializing all stored properties
+```
 프로퍼티 초기화 누락으로 생긴 에러로 var num1: Int = 0 기본값을 줌으로써 해결되었다.
 
 <br>
 
-##### `Missing argument label 'num2:' in call` 
-해결방법: 파라미터 언더스코어 누락으로 생긴 오류이다. <br>
+```swift
+Missing argument label 'num2:' in call
+```
+
+파라미터 언더스코어 누락으로 생긴 오류이다. <br>
+
 ```swift
 func add(_ num1: Int, num2: Int) -> Int
 ```
